@@ -43,7 +43,7 @@ def delete(id):
     connector.close()
 
 
-def update(id, titulo, autor, ano, isbn):
+def update(titulo, autor, ano, isbn, id):
     connector = sqlite3.connect("bookstore.db")
     cursor = connector.cursor()
     cursor.execute("UPDATE books SET titulo=?, autor=?, ano=?, isbn=? WHERE id=?", (titulo, autor, ano, isbn, id))

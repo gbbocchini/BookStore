@@ -5,7 +5,7 @@ window = Tk()
 
 window.wm_title("Cadastro Livros")
 
-""" funções back X front """
+""" Wrappers """
 
 def view_command():
     backend.create_table()
@@ -23,24 +23,27 @@ def search_command():
 
 def insert_command():
     backend.create_table()
-    backend.addbook(titulo.get(), autor.get(), ano.get(), isbn.get())
+    backend.addbook(booktittle.get(), bookyear.get(), bookauthor.get(), bookisbn.get())
     listagem.delete(0, END)
-    listagem.addbook(END,(titulo.get(), autor.get(), ano.get(), isbn.get()))
+    listagem.insert(END,(booktittle.get(), bookyear.get(), bookauthor.get(), bookisbn.get()))
 
+selected_tuple = ""
 
 def get_selected_row(event):
-    global selected_tuple
-    index=listagem.curselection()[0]
-    selected_tuple = listagem.get(index)
-    booktittle.delete(0,END)
-    booktittle.insert(END,selected_tuple[1])
-    bookyear.delete(0,END)
-    bookyear.insert(END,selected_tuple[2])
-    bookauthor.delete(0,END)
-    bookauthor.insert(END,selected_tuple[3])
-    bookisbn.delete(0,END)
-    bookisbn.insert(END,selected_tuple[4])
-
+    try:
+        index=listagem.curselection()[0]
+        global selected_tuple
+        selected_tuple = listagem.get(index)
+        booktittle.delete(0,END)
+        booktittle.insert(END,selected_tuple[1])
+        bookyear.delete(0,END)
+        bookyear.insert(END,selected_tuple[2])
+        bookauthor.delete(0,END)
+        bookauthor.insert(END,selected_tuple[3])
+        bookisbn.delete(0,END)
+        bookisbn.insert(END,selected_tuple[4])
+    except IndexError:
+        pass
 
 def delete_command():
     backend.create_table()
@@ -49,7 +52,7 @@ def delete_command():
 
 def update_command():
     backend.create_table()
-    backend.update(selected_tuple[0], titulo.get(), autor.get(), ano.get(), isbn.get())
+    backend.update(selected_tuple[0], booktittle.get(), bookyear.get(), bookauthor.get(), bookisbn.get())
 
 
 """ caixas de texto e labels das mesmas """
